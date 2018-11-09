@@ -1,10 +1,11 @@
 package id.kotlin.android.core.domain
 
-import io.reactivex.observers.DisposableObserver
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.Disposable
 
-class DefaultObserver<T> : DisposableObserver<T>() {
+class DefaultObserver<T> : SingleObserver<T> {
 
-    override fun onNext(t: T) {}
+    override fun onSubscribe(disposable: Disposable) {}
+    override fun onSuccess(t: T) {}
     override fun onError(exception: Throwable) {}
-    override fun onComplete() {}
 }

@@ -2,28 +2,25 @@ package id.kotlin.android.core.domain
 
 import id.kotlin.android.core.executor.PostExecutionThread
 import id.kotlin.android.core.executor.ThreadExecutor
-import io.reactivex.Observable
-import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-abstract class UseCase<T, Params> constructor(
+abstract class UseCase<T, in Params> constructor(
         private val threadExecutor: ThreadExecutor,
-        private val postExecutionThread: PostExecutionThread,
-        private val disposables: CompositeDisposable = CompositeDisposable()) {
+        private val postExecutionThread: PostExecutionThread) {
 
-    abstract fun buildUseCaseObservable(params: Params): Observable<T>
+    private val disposables: CompositeDisposable = CompositeDisposable()
 
-    fun execute(observer: DisposableObserver<T>, params: Params) {
-        val threadExecutorSchedulers: Scheduler = Schedulers.from(threadExecutor)
-        val scheduler: Scheduler = postExecutionThread.scheduler
-        val observable: Observable<T> = buildUseCaseObservable(params)
-                .subscribeOn(threadExecutorSchedulers)
-                .observeOn(scheduler)
-        val disposable: Disposable = observable.subscribeWith(observer)
-        addDisposable(disposable)
+    protected abstract fun buildUseCaseObservable(params: Params? = null): Single<T>
+
+    fun execute(singleObserver: DisposableSingleObserver<T>, params: Params? = null) {
+        val single: Single<T> = buildUseCaseObservable(params)
+                .subscribeOn(Schedulers.from(threadExecutor))
+                .observeOn(postExecutionThread.scheduler)
+        addDisposable(single.subscribeWith(singleObserver))
     }
 
     fun dispose() {

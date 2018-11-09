@@ -14,7 +14,7 @@ import javax.inject.Singleton
     NetworkModule::class,
     FeatureModule::class
 ])
-interface AppComponent {
+interface ApplicationComponent {
 
     @Component.Builder
     interface Builder {
@@ -22,8 +22,8 @@ interface AppComponent {
         @BindsInstance
         fun application(application: Application): Builder
 
-        fun build(): AppComponent
+        fun build(): ApplicationComponent
     }
 
-    fun inject(app: App)
+    fun inject(application: App)
 }

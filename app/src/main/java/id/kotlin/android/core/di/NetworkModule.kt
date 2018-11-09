@@ -10,6 +10,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Singleton
 
+object HttpClientConfig {
+
+    const val CONNECT_TIMEOUT: Long = 30
+    const val READ_TIMEOUT: Long = 15
+    const val WRITE_TIMEOUT: Long = 15
+    const val RETRY_CONNECTION_FAILURE = true
+}
+
 @Module
 class NetworkModule {
 
@@ -17,10 +25,10 @@ class NetworkModule {
     @Singleton
     fun providesHttpClient(): OkHttpClient =
             OkHttpClient.Builder().apply {
-                connectTimeout(30, SECONDS)
-                readTimeout(15, SECONDS)
-                writeTimeout(15, SECONDS)
-                retryOnConnectionFailure(true)
+                connectTimeout(HttpClientConfig.CONNECT_TIMEOUT, SECONDS)
+                readTimeout(HttpClientConfig.READ_TIMEOUT, SECONDS)
+                writeTimeout(HttpClientConfig.WRITE_TIMEOUT, SECONDS)
+                retryOnConnectionFailure(HttpClientConfig.RETRY_CONNECTION_FAILURE)
             }.build()
 
     @Provides

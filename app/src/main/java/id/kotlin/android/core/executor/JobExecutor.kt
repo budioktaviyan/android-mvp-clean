@@ -5,9 +5,7 @@ import java.util.concurrent.ThreadFactory
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class JobExecutor @Inject constructor() : ThreadExecutor {
 
     private val threadPoolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(
@@ -25,5 +23,7 @@ class JobExecutor @Inject constructor() : ThreadExecutor {
 }
 
 class JobThreadFactory constructor(private var counter: Int = 0) : ThreadFactory {
-    override fun newThread(runnable: Runnable?): Thread = Thread(runnable, "android_${counter.inc()}")
+    override fun newThread(runnable: Runnable?): Thread = Thread(
+            runnable, "android_${counter.inc()}"
+    )
 }

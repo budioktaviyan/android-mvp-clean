@@ -2,17 +2,18 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             tools:context=".features.detail.DetailActivity">
+                                             android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_detail"
+    <ImageView
+        android:id="@+id/iv_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:layout_height="256dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_launcher_background" />
 </android.support.constraint.ConstraintLayout>

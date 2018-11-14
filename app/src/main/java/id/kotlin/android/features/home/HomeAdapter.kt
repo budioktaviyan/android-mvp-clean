@@ -10,7 +10,15 @@ import id.kotlin.android.core.ext.load
 import id.kotlin.android.features.home.HomeAdapter.HomeViewHolder
 import kotlinx.android.synthetic.main.item_home.view.*
 
-class HomeAdapter(private val movies: List<Movie>) : Adapter<HomeViewHolder>() {
+interface HomeListener {
+
+    fun onClick(movie: Movie)
+}
+
+class HomeAdapter(
+        private val listener: HomeListener,
+        private val movies: List<Movie>
+) : Adapter<HomeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder =
             HomeViewHolder(parent.inflate(R.layout.item_home))
@@ -26,6 +34,7 @@ class HomeAdapter(private val movies: List<Movie>) : Adapter<HomeViewHolder>() {
         fun bindView(movie: Movie) {
             itemView.iv_home.load(movie.posterPath)
             itemView.tv_home.text = movie.title
+            itemView.rootView.setOnClickListener { listener.onClick(movie) }
         }
     }
 }

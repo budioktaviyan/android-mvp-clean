@@ -1,5 +1,6 @@
 package id.kotlin.android.features.home
 
+import id.kotlin.android.BuildConfig.IMAGE_URL
 import io.reactivex.Single
 
 interface HomeRepository {
@@ -16,8 +17,8 @@ class HomeRepositories(private val factory: HomeFactory) : HomeRepository {
                 val movies: List<Movie> = it.results.map { result ->
                     val title = result?.title ?: ""
                     val overview = result?.overview ?: ""
-                    val posterPath = "/t/p/original/${result?.posterPath ?: ""}"
-                    val backdropPath = "/t/p/original${result?.backdropPath ?: ""}"
+                    val posterPath = "$IMAGE_URL/t/p/original/${result?.posterPath ?: ""}"
+                    val backdropPath = "$IMAGE_URL/t/p/original${result?.backdropPath ?: ""}"
                     Movie(
                             title = title,
                             overview = overview,

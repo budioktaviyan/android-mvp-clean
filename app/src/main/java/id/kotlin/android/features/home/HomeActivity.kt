@@ -18,12 +18,18 @@ class HomeActivity : AppCompatActivity(), HomeView, HomeListener {
     @Inject lateinit var presenter: HomePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        AndroidInjection.inject(this)
 
         val params = HomeParam(CoreConfig.API_KEY)
+        presenter.onAttach(this)
         presenter.discoverMovie(params)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDetach()
     }
 
     override fun onShowLoading() {
@@ -38,9 +44,14 @@ class HomeActivity : AppCompatActivity(), HomeView, HomeListener {
         rv_home.adapter = HomeAdapter(this, entity.movies)
     }
 
+    override fun onShowErrorMessage(message: String) {
+        tv_home_error.text = message
+        tv_home_error.show()
+    }
+
     override fun onClick(movie: Movie) {
-        Intent(this, clazz<DetailActivity>()).apply {
-            putExtra("MOVIE", movie)
-        }.apply { startActivity(this) }
+        Intent(this, clazz<DetailActivity>())
+                .apply { putExtra("MOVIE", movie) }
+                .apply { startActivity(this) }
     }
 }

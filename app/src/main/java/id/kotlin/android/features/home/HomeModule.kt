@@ -1,6 +1,5 @@
 package id.kotlin.android.features.home
 
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import id.kotlin.android.core.di.PerFeature
@@ -24,8 +23,8 @@ class HomeModule {
 
     @PerFeature
     @Provides
-    fun providesHomeRepositories(factory: HomeFactory): HomeRepositories =
-            HomeRepositories(factory)
+    fun providesHomeRepository(factory: HomeFactory): HomeRepository =
+            HomeRepository(factory)
 
     @PerFeature
     @Provides
@@ -37,20 +36,6 @@ class HomeModule {
 
     @PerFeature
     @Provides
-    fun providesHomePresenter(
-            view: HomeView,
-            usecase: HomeUsecase
-    ): HomePresenter = HomePresenter(view, usecase)
-}
-
-@Module
-abstract class HomeSubmodule {
-
-    @Binds
-    @Suppress("unused")
-    abstract fun bindsHomeRepository(repositories: HomeRepositories): HomeRepository
-
-    @Binds
-    @Suppress("unused")
-    abstract fun bindsHomeView(activity: HomeActivity): HomeView
+    fun providesHomePresenter(usecase: HomeUsecase): HomePresenter =
+            HomePresenter(usecase)
 }

@@ -14,12 +14,13 @@ class DetailActivity : AppCompatActivity(), DetailView {
     @Inject lateinit var presenter: DetailPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        AndroidInjection.inject(this)
 
         val movie = intent.getParcelableExtra<Movie>("MOVIE")
+        presenter.onAttach(this)
         presenter.showMovie(movie)
     }
 

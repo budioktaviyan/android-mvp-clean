@@ -3,14 +3,9 @@ package id.kotlin.android.features.home
 import id.kotlin.android.BuildConfig.IMAGE_URL
 import io.reactivex.Single
 
-interface HomeRepository {
+class HomeRepository(private val factory: HomeFactory) {
 
-    fun discoverMovie(params: HomeParam): Single<HomeEntity>
-}
-
-class HomeRepositories(private val factory: HomeFactory) : HomeRepository {
-
-    override fun discoverMovie(params: HomeParam): Single<HomeEntity> =
+    fun discoverMovie(params: HomeParam): Single<HomeEntity> =
             factory.discoverMovie(params).map {
                 val page: Long = it.page ?: 0
                 val totalPages: Long = it.totalPages ?: 0

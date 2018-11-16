@@ -32,9 +32,11 @@ class HomeAdapter(
     inner class HomeViewHolder(itemView: View) : ViewHolder(itemView) {
 
         fun bindView(movie: Movie) {
-            itemView.iv_home.load(movie.posterPath)
-            itemView.tv_home.text = movie.title
-            itemView.rootView.setOnClickListener { listener.onClick(movie) }
+            with(itemView) {
+                iv_home.load(movie.posterPath)
+                tv_home.text = movie.title
+                rootView.setOnClickListener { listener.onClick(movie) }
+            }
         }
     }
 }

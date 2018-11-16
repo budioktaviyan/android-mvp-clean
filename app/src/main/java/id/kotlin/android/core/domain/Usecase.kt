@@ -5,10 +5,9 @@ import id.kotlin.android.core.executor.ThreadExecutor
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-abstract class UseCase<T, in Params>(
+abstract class Usecase<T, in Params>(
         private val threadExecutor: ThreadExecutor,
         private val postExecutionThread: PostExecutionThread) {
 
@@ -16,7 +15,7 @@ abstract class UseCase<T, in Params>(
 
     protected abstract fun buildUsecaseObservable(params: Params): Single<T>
 
-    fun execute(singleObserver: DisposableSingleObserver<T>, params: Params) {
+    fun execute(singleObserver: DefaultObserver<T>, params: Params) {
         val single: Single<T> = buildUsecaseObservable(params)
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.scheduler)

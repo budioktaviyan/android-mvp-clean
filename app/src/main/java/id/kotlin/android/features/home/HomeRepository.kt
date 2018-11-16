@@ -13,7 +13,7 @@ class HomeRepository(private val factory: HomeFactory) {
                     val title = result?.title ?: ""
                     val overview = result?.overview ?: ""
                     val posterPath = "$IMAGE_URL/t/p/original/${result?.posterPath ?: ""}"
-                    val backdropPath = "$IMAGE_URL/t/p/original${result?.backdropPath ?: ""}"
+                    val backdropPath = "$IMAGE_URL/t/p/original/${result?.backdropPath ?: ""}"
                     Movie(
                             title = title,
                             overview = overview,

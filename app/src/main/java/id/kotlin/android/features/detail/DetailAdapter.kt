@@ -45,14 +45,18 @@ class DetailAdapter(private val movie: Movie) : Adapter<ViewHolder>() {
     inner class DetailHeaderViewHolder(itemView: View) : ViewHolder(itemView) {
 
         fun bindView(movie: Movie) {
-            itemView.iv_detail.load(movie.backdropPath)
+            with(itemView) {
+                iv_detail.load(movie.backdropPath)
+            }
         }
     }
 
     inner class DetailViewHolder(itemView: View) : ViewHolder(itemView) {
 
         fun bindView(movie: Movie) {
-            itemView.tv_detail.text = movie.overview
+            with(itemView) {
+                tv_detail.text = movie.overview
+            }
         }
     }
 }
